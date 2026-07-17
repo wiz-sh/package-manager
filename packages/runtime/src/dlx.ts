@@ -11,7 +11,7 @@ import {
     WizError,
     wizHome,
     writeLockfile,
-} from "@wiz/pm";
+} from "@wiz-sh/pm";
 import { runtimeEnvironment } from "./environment.ts";
 import { executableInside, runExecutable } from "./runner.ts";
 

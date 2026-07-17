@@ -1,4 +1,4 @@
-# @wiz/pm
+# @wiz-sh/pm
 
 Internal package-management services for Wiz, including schema-backed manifests,
 lockfiles, dependency resolution, storage, approvals, workspaces, and command

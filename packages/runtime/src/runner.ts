@@ -1,6 +1,6 @@
 import { access, lstat, realpath } from "node:fs/promises";
 import { relative, resolve } from "node:path";
-import { WizError } from "@wiz/pm";
+import { WizError } from "@wiz-sh/pm";
 
 export async function executableInside(
     root: string,

@@ -7,7 +7,7 @@ import {
     RegistryClient,
     type RegistryPackageVersion,
     selectRegistry,
-} from "@wiz/registry-client";
+} from "@wiz-sh/registry-client";
 import type { RegistryDependencySpec } from "../types.ts";
 import { WizError } from "../utils/errors.ts";
 import { storePath } from "./store.ts";

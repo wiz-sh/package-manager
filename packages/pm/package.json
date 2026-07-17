@@ -1,5 +1,5 @@
 {
-    "name": "@wiz/pm",
+    "name": "@wiz-sh/pm",
     "version": "0.1.0",
     "description": "Registry, Git, local, and workspace package management for Wiz",
     "license": "MIT",
@@ -38,9 +38,12 @@
         "build": "bun build ./src/index.ts --outdir ./dist --target bun --format esm && tsc --project ./tsconfig.build.json"
     },
     "dependencies": {
-        "@wiz/registry-client": "^0.1.0"
+        "@wiz-sh/registry-client": "^0.1.0"
     },
     "engines": {
         "bun": ">=1.2.0"
+    },
+    "publishConfig": {
+        "access": "public"
     }
 }

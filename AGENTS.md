@@ -4,7 +4,7 @@ Read `WIZ.md` for the product model before changing public behavior.
 
 ## Ownership
 
-This repository owns `@wiz/pm` and `@wiz/runtime`. Package resolution, manifests, lockfiles, stores, workspaces, and installation belong to PM. Executable resolution and process behavior belong to runtime. PM must never depend on runtime.
+This repository owns `@wiz-sh/pm` and `@wiz-sh/runtime`. Package resolution, manifests, lockfiles, stores, workspaces, and installation belong to PM. Executable resolution and process behavior belong to runtime. PM must never depend on runtime.
 
 ## Engineering rules
 

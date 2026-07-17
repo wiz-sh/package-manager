@@ -1,5 +1,5 @@
 import { join } from "node:path";
-import { wizHome } from "@wiz/pm";
+import { wizHome } from "@wiz-sh/pm";
 export interface RuntimePackageIdentity {
     id?: string;
     resolvedBranch?: string;

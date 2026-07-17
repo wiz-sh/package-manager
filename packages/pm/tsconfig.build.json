@@ -7,7 +7,7 @@
         "outDir": "./dist",
         "rootDir": "./src",
         "paths": {
-            "@wiz/registry-client": [
+            "@wiz-sh/registry-client": [
                 "../../../registry/packages/registry-client/dist/index.d.ts"
             ]
         }

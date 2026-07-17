@@ -1,4 +1,4 @@
-import { WizError } from "@wiz/pm";
+import { WizError } from "@wiz-sh/pm";
 
 /** Resolves an executable using the current process PATH. */
 export function resolveSystemExecutable(binary: string): string | undefined {

@@ -1,8 +1,14 @@
 {
-    "name": "@wiz/runtime",
+    "name": "@wiz-sh/runtime",
     "version": "0.1.0",
     "description": "Executable resolution and command runtime for Wiz",
     "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/wiz-sh/package-manager.git",
+        "directory": "packages/runtime"
+    },
+    "homepage": "https://github.com/wiz-sh/package-manager#readme",
     "type": "module",
     "types": "./dist/index.d.ts",
     "exports": {
@@ -12,11 +18,17 @@
             "default": "./dist/index.js"
         }
     },
+    "files": [
+        "dist"
+    ],
     "scripts": {
         "build": "bun build ./src/index.ts --outdir ./dist --target bun --format esm && tsc --project ./tsconfig.build.json"
     },
     "dependencies": {
-        "@wiz/pm": "^0.1.0"
+        "@wiz-sh/pm": "^0.1.0"
+    },
+    "publishConfig": {
+        "access": "public"
     },
     "engines": {
         "bun": ">=1.2.0"

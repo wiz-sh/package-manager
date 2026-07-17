@@ -106,7 +106,7 @@ function render(source: string, projectName: string): string {
 function projectManifest(name: string, main: string): string {
     return `${JSON.stringify(
         {
-            $schema: "./node_modules/@wiz/pm/schemas/manifest.schema.json",
+            $schema: "./node_modules/@wiz-sh/pm/schemas/manifest.schema.json",
             name,
             version: "0.1.0",
             main,

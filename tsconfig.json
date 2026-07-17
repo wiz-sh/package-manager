@@ -11,13 +11,13 @@
         "verbatimModuleSyntax": true,
         "allowImportingTsExtensions": true,
         "paths": {
-            "@wiz/pm": [
+            "@wiz-sh/pm": [
                 "./packages/pm/src/index.ts"
             ],
-            "@wiz/runtime": [
+            "@wiz-sh/runtime": [
                 "./packages/runtime/src/index.ts"
             ],
-            "@wiz/registry-client": [
+            "@wiz-sh/registry-client": [
                 "../registry/packages/registry-client/src/index.ts"
             ]
         },

@@ -15,7 +15,7 @@ import {
     readProjectLinks,
     WizError,
     wizHome,
-} from "@wiz/pm";
+} from "@wiz-sh/pm";
 import { runtimeEnvironment } from "./environment.ts";
 import { executableInside, runExecutable, runScript } from "./runner.ts";
 
