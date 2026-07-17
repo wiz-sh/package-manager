@@ -321,6 +321,18 @@
                     "type": "object",
                     "additionalProperties": false,
                     "required": [
+                        "builtin"
+                    ],
+                    "properties": {
+                        "builtin": {
+                            "const": "types"
+                        }
+                    }
+                },
+                {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
                         "version"
                     ],
                     "properties": {

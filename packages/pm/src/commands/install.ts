@@ -1,5 +1,6 @@
 import { join } from "node:path";
 import { resolveGit } from "../dependencies/git.ts";
+import { isOfficialTypeSpecifier } from "../dependencies/official-types.ts";
 import { resolveDependencies } from "../dependencies/resolver.ts";
 import { ensureStored, storePath } from "../dependencies/store.ts";
 import {
@@ -66,7 +67,11 @@ async function ensurePackagesStored(
             continue;
         }
 
-        if (item.source?.type === "registry" || item.source?.type === "local") {
+        if (
+            item.source?.type === "registry" ||
+            item.source?.type === "local" ||
+            item.source?.type === "builtin"
+        ) {
             continue;
         }
 
@@ -181,12 +186,14 @@ export async function addRegistry(
         ...state.manifest,
         dependencies: {
             ...state.manifest.dependencies,
-            [options.name]: {
-                version: options.version ?? "latest",
-                ...(options.registry === undefined
-                    ? {}
-                    : { registry: options.registry }),
-            },
+            [options.name]: isOfficialTypeSpecifier(options.name)
+                ? { builtin: "types" }
+                : {
+                      version: options.version ?? "latest",
+                      ...(options.registry === undefined
+                          ? {}
+                          : { registry: options.registry }),
+                  },
         },
     };
 

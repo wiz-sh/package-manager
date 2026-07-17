@@ -13,6 +13,10 @@ import type {
 import { WizError } from "../utils/errors.ts";
 import { normalizeRepo, resolveGit } from "./git.ts";
 import {
+    isOfficialTypeSpecifier,
+    officialTypePackageRoot,
+} from "./official-types.ts";
+import {
     ensureRegistryStored,
     registryPackageFromLock,
     resolveRegistryPackage,
@@ -42,6 +46,12 @@ function isLocalDependency(
     spec: DependencySpec,
 ): spec is Extract<DependencySpec, { path: string }> {
     return "path" in spec;
+}
+
+function isBuiltinDependency(
+    spec: DependencySpec,
+): spec is Extract<DependencySpec, { builtin: "types" }> {
+    return "builtin" in spec;
 }
 
 /** Resolves Git and local workspace packages into one exact dependency graph. */
@@ -333,6 +343,68 @@ export async function resolveDependencies(
         return id;
     }
 
+    async function visitBuiltinType(
+        name: string,
+        direct: boolean,
+    ): Promise<string> {
+        const root = officialTypePackageRoot(name);
+
+        const dependencyManifest = await readManifest(root);
+
+        if (dependencyManifest.package.name !== name) {
+            throw new WizError(
+                `Bundled type dependency ${name} contains package ${dependencyManifest.package.name}`,
+            );
+        }
+
+        const version = dependencyManifest.package.version ?? "bundled";
+
+        const id = `${name}@builtin:${version}`;
+
+        const existing = beginVisit(id, name);
+
+        if (existing !== undefined) {
+            if (direct && !existing.direct) {
+                packages.set(id, { ...existing, direct: true });
+            }
+
+            return id;
+        }
+
+        visiting.push({ id, name });
+
+        const dependencies: Record<string, string> = {};
+
+        packages.set(id, {
+            id,
+            name,
+            repo: `builtin:${name}`,
+            commit: version,
+            direct,
+            dependencies,
+            source: {
+                type: "builtin",
+                package: name,
+                version,
+            },
+        });
+
+        for (const [childName, childSpec] of Object.entries(
+            dependencyManifest.dependencies,
+        )) {
+            dependencies[childName] = await visit(
+                childName,
+                childSpec,
+                false,
+                root,
+            );
+        }
+
+        visiting.pop();
+
+        return id;
+    }
+
     async function visitLocal(
         name: string,
         spec: Extract<DependencySpec, { path: string }>,
@@ -403,6 +475,10 @@ export async function resolveDependencies(
             return visitWorkspace(name, spec.workspace, direct);
         }
 
+        if (isBuiltinDependency(spec) || isOfficialTypeSpecifier(name)) {
+            return visitBuiltinType(name, direct);
+        }
+
         if (isRegistryDependency(spec)) {
             return visitRegistry(name, spec, direct);
         }
@@ -433,7 +509,8 @@ export async function resolveDependencies(
         lockfileVersion: [...packages.values()].some((item) => {
             return (
                 item.source?.type === "registry" ||
-                item.source?.type === "local"
+                item.source?.type === "local" ||
+                item.source?.type === "builtin"
             );
         })
             ? 2

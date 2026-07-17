@@ -23,6 +23,7 @@
     "devDependencies": {
         "@biomejs/biome": "^2.2.0",
         "@wiz-sh/registry-client": "^0.1.0",
+        "@wiz-sh/types": "^0.1.1",
         "bun-types": "^1.2.19",
         "typescript": "^5.9.2"
     },

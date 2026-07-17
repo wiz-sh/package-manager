@@ -514,9 +514,28 @@ export function validateManifest(
                 "path",
                 "registry",
                 "version",
+                "builtin",
             ],
             `dependencies.${name}`,
         );
+
+        if (spec.builtin !== undefined) {
+            if (spec.builtin !== "types" || Object.keys(spec).length !== 1) {
+                throw new WizError(
+                    `Builtin dependency ${name} must use { "builtin": "types" }`,
+                );
+            }
+
+            if (!name.startsWith("@types/")) {
+                throw new WizError(
+                    `Builtin type dependency must use the @types scope: ${name}`,
+                );
+            }
+
+            dependencies[name] = { builtin: "types" };
+
+            continue;
+        }
 
         if (spec.workspace !== undefined) {
             if (

@@ -17,11 +17,16 @@ export interface LocalDependencySpec {
     path: string;
 }
 
+export interface BuiltinDependencySpec {
+    builtin: "types";
+}
+
 export type DependencySpec =
     | GitDependencySpec
     | WorkspaceDependencySpec
     | RegistryDependencySpec
-    | LocalDependencySpec;
+    | LocalDependencySpec
+    | BuiltinDependencySpec;
 
 export interface Person {
     name: string;
@@ -91,6 +96,11 @@ export interface LockedPackage {
         | {
               type: "local";
               path: string;
+          }
+        | {
+              type: "builtin";
+              package: string;
+              version: string;
           };
     archive?: {
         url: string;

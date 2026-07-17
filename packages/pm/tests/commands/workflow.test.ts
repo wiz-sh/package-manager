@@ -7,6 +7,7 @@ import { createRepository, gitCommand } from "../../../../tests/utils/git.ts";
 import { indexPath } from "../../../runtime/src/execution.ts";
 import { doctor, verifyCache, why } from "../../src/commands/maintenance.ts";
 import {
+    addRegistry,
     approve,
     install,
     list,
@@ -20,6 +21,7 @@ import { readManifest } from "../../src/project/manifest.ts";
 const roots: string[] = [];
 const originalCwd = process.cwd();
 const originalHome = process.env.WIZ_HOME;
+const originalRegistry = process.env.WIZ_REGISTRY;
 
 async function createTestRoot(): Promise<string> {
     const root = await temporaryDirectory();
@@ -52,6 +54,12 @@ afterEach(async () => {
         delete process.env.WIZ_HOME;
     } else {
         process.env.WIZ_HOME = originalHome;
+    }
+
+    if (originalRegistry === undefined) {
+        delete process.env.WIZ_REGISTRY;
+    } else {
+        process.env.WIZ_REGISTRY = originalRegistry;
     }
 
     for (const root of roots.splice(0)) {
@@ -151,6 +159,46 @@ test("frozen installs reject absent and stale lockfiles", async () => {
     await writeFile(join(root, "manifest.json"), staleManifest);
 
     expect(install(true)).rejects.toThrow("differ");
+});
+
+test("official type packages install from the bundled catalog offline", async () => {
+    const root = await createTestRoot();
+
+    const project = await createProject(root, manifest("project"));
+
+    enterProject(root, project);
+
+    // Any accidental registry resolution fails immediately instead of using the network.
+    process.env.WIZ_REGISTRY = "http://127.0.0.1:1";
+
+    const name = await addRegistry({ name: "@types/common" });
+
+    const savedManifest = await readManifest(project);
+
+    const lockfile = await readLockfile(project);
+
+    const installedIndex = join(
+        project,
+        "wiz_modules",
+        "@types",
+        "common",
+        "index.d.wiz",
+    );
+
+    expect(name).toBe("@types/common");
+
+    expect(savedManifest.dependencies[name]).toEqual({ builtin: "types" });
+
+    expect(lockfile?.packages[0]?.source).toEqual(
+        expect.objectContaining({
+            type: "builtin",
+            package: "@types/common",
+        }),
+    );
+
+    expect(await Bun.file(installedIndex).exists()).toBe(true);
+
+    await install(true);
 });
 
 test("isolates incompatible transitive revisions of the same package", async () => {

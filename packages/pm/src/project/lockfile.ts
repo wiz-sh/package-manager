@@ -183,6 +183,24 @@ export function validateLockfile(value: JsonValue): Lockfile {
                         `packages[${index}].source.path`,
                     ),
                 };
+            } else if (type === "builtin") {
+                assertJsonKeys(
+                    rawSource,
+                    ["type", "package", "version"],
+                    `packages[${index}].source`,
+                );
+
+                source = {
+                    type,
+                    package: requiredString(
+                        rawSource.package,
+                        `packages[${index}].source.package`,
+                    ),
+                    version: requiredString(
+                        rawSource.version,
+                        `packages[${index}].source.version`,
+                    ),
+                };
             } else {
                 throw new WizError(
                     `packages[${index}].source.type is unsupported`,
@@ -450,9 +468,17 @@ export async function lockMatchesManifest(
             );
         }
 
+        if ("builtin" in spec) {
+            return (
+                item.source?.type === "builtin" && item.source.package === name
+            );
+        }
+
         if ("version" in spec) {
             return (
-                item.source?.type === "registry" && item.source.package === name
+                (item.source?.type === "registry" ||
+                    item.source?.type === "builtin") &&
+                item.source.package === name
             );
         }
 

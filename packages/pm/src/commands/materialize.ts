@@ -1,5 +1,6 @@
 import { cp, mkdir, rename, rm } from "node:fs/promises";
 import { dirname, join, relative } from "node:path";
+import { officialTypePackageRoot } from "../dependencies/official-types.ts";
 import { instancePath } from "../dependencies/resolver.ts";
 import { replaceSymlink, storePath } from "../dependencies/store.ts";
 import { applyProjectLinks } from "../global/links.ts";
@@ -84,6 +85,20 @@ async function createPackageInstances(
             await mkdir(join(localRoot, "wiz_modules"), { recursive: true });
 
             instances.set(item.id, localRoot);
+
+            continue;
+        }
+
+        if (item.source?.type === "builtin") {
+            const source = officialTypePackageRoot(item.source.package);
+
+            const destination = instancePath(temporaryModules, item);
+
+            await cp(source, destination, { recursive: true });
+
+            await mkdir(join(destination, "wiz_modules"), { recursive: true });
+
+            instances.set(item.id, destination);
 
             continue;
         }

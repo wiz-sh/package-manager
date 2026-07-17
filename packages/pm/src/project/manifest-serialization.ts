@@ -121,6 +121,12 @@ function serializeDependencies(manifest: Manifest): JsonObject {
     );
 
     for (const [name, dependency] of dependencies) {
+        if ("builtin" in dependency) {
+            result[name] = { builtin: dependency.builtin };
+
+            continue;
+        }
+
         if ("workspace" in dependency) {
             result[name] = { workspace: dependency.workspace };
 

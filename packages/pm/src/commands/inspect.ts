@@ -144,6 +144,12 @@ export async function info(): Promise<string[]> {
             continue;
         }
 
+        if ("builtin" in spec) {
+            lines.push(`Dependency (${name}): bundled types`);
+
+            continue;
+        }
+
         if ("version" in spec) {
             lines.push(
                 `Dependency (${name}): registry ${spec.registry ?? "default"} [${spec.version}]`,
