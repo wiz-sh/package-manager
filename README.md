@@ -32,8 +32,6 @@ Archive extraction, package paths, manifests, and traversal boundaries are valid
 
 ## Development
 
-Keep the registry repository beside this checkout, then run:
-
 ```console
 bun install
 bun run check

@@ -6,7 +6,7 @@
       "name": "@wiz-sh/package-manager-workspace",
       "devDependencies": {
         "@biomejs/biome": "^2.2.0",
-        "@wiz-sh/registry-client": "file:../registry/packages/registry-client",
+        "@wiz-sh/registry-client": "^0.1.0",
         "bun-types": "^1.2.19",
         "typescript": "^5.9.2",
       },
@@ -25,9 +25,6 @@
         "@wiz-sh/pm": "^0.1.0",
       },
     },
-  },
-  "overrides": {
-    "@wiz-sh/registry-client": "file:../registry/packages/registry-client",
   },
   "packages": {
     "@biomejs/biome": ["@biomejs/biome@2.5.4", "", { "optionalDependencies": { "@biomejs/cli-darwin-arm64": "2.5.4", "@biomejs/cli-darwin-x64": "2.5.4", "@biomejs/cli-linux-arm64": "2.5.4", "@biomejs/cli-linux-arm64-musl": "2.5.4", "@biomejs/cli-linux-x64": "2.5.4", "@biomejs/cli-linux-x64-musl": "2.5.4", "@biomejs/cli-win32-arm64": "2.5.4", "@biomejs/cli-win32-x64": "2.5.4" }, "bin": { "biome": "bin/biome" } }, "sha512-xy5FNE5kQJKyK5MR1gJy6ztXYx4WBAbYGlK04lMEgmyPRWKybY9NFwiG9yo0XdzOU8Xvhj41u034J1ywfoWfMw=="],
@@ -52,7 +49,7 @@
 
     "@wiz-sh/pm": ["@wiz-sh/pm@workspace:packages/pm"],
 
-    "@wiz-sh/registry-client": ["@wiz-sh/registry-client@file:../registry/packages/registry-client", {}],
+    "@wiz-sh/registry-client": ["@wiz-sh/registry-client@0.1.0", "", {}, "sha512-R1wdBkeUXkS3R+Hd99ySP10XuNoXPdLwahBplK+oboJbeGipFpMDiHCBVysOERc0Ci/p1vBnKVlMxNvnVjmbew=="],
 
     "@wiz-sh/runtime": ["@wiz-sh/runtime@workspace:packages/runtime"],
 
@@ -61,7 +58,5 @@
     "typescript": ["typescript@5.9.3", "", { "bin": { "tsc": "bin/tsc", "tsserver": "bin/tsserver" } }, "sha512-jl1vZzPDinLr9eUt3J/t7V6FgNEw9QjvBPdysz9KfQDD41fQrC2Y4vKQdiaUpFT4bXlb1RHhLpp8wtm6M5TgSw=="],
 
     "undici-types": ["undici-types@8.3.0", "", {}, "sha512-j375ScV60dom+YkPFIfTLcOiPxkN/buHz5GobjLhixFuANaNs3C9l4GmrWqejgXWJ7BbJcFYpTEUkS1Ge8bpZQ=="],
-
-    "@wiz-sh/pm/@wiz-sh/registry-client": ["@wiz-sh/registry-client@file:../registry/packages/registry-client", {}],
   }
 }

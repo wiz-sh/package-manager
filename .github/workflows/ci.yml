@@ -32,10 +32,6 @@ jobs:
             - uses: actions/checkout@v7
               with:
                   path: suite/package-manager
-            - uses: actions/checkout@v7
-              with:
-                  repository: wiz-sh/registry
-                  path: suite/registry
             - uses: oven-sh/setup-bun@v2
               with:
                   bun-version: ${{ env.BUN_VERSION }}
