@@ -2,7 +2,7 @@ import type { Manifest, Person } from "../types.ts";
 import { type JsonObject, serializeJson } from "../utils/json.ts";
 
 export const MANIFEST_SCHEMA_URL =
-    "https://raw.githubusercontent.com/hazelcaffe/wiz/main/packages/pm/schemas/manifest.schema.json";
+    "https://raw.githubusercontent.com/wiz-sh/package-manager/main/packages/pm/schemas/manifest.schema.json";
 
 function serializePerson(person: Person): JsonObject {
     const result: JsonObject = { name: person.name };

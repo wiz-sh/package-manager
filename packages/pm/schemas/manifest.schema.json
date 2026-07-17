@@ -1,6 +1,6 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "$id": "https://raw.githubusercontent.com/hazelcaffe/wiz/main/packages/pm/schemas/manifest.schema.json",
+    "$id": "https://raw.githubusercontent.com/wiz-sh/package-manager/main/packages/pm/schemas/manifest.schema.json",
     "title": "Wiz package manifest",
     "description": "A Wiz shell package, registry package, or monorepo workspace definition.",
     "type": "object",
