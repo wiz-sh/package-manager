@@ -29,10 +29,10 @@ jobs:
                     - macos-latest
         timeout-minutes: 30
         steps:
-            - uses: actions/checkout@v4
+            - uses: actions/checkout@v7
               with:
                   path: suite/package-manager
-            - uses: actions/checkout@v4
+            - uses: actions/checkout@v7
               with:
                   repository: wiz-sh/registry
                   path: suite/registry
